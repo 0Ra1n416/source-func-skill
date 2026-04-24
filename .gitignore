@@ -1,0 +1,4 @@
+__pycache__
+.venv
+LLM_config.json
+origin_api_key.txt

@@ -1,0 +1,253 @@
+import sys
+import os
+
+# 将上级目录添加到sys.path，以便导入vulfunc_ranker模块
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# 导入vulfunc_ranker模块中的各个子模块
+import vulfunc_ranker.tasks.decompile
+import vulfunc_ranker.tasks.detect_input_parser_funcs_sort
+import vulfunc_ranker.tasks.ast_parse as ap
+import vulfunc_ranker.tasks.parsing_logic as pl
+import vulfunc_ranker.tasks.recognize_input_parsing_funcs
+import vulfunc_ranker.tasks.path_collision as pc
+import vulfunc_ranker.tasks.input_funcs as inf
+import vulfunc_ranker.scripts.generate_input_chain as gic
+import vulfunc_ranker.tasks.get_extern as ge
+
+# 其他必要的导入
+import idapro
+import idc
+import json
+
+# 配置路径和初始阈值
+THRESHOLD = 6.0
+NOW_PY_DIR = os.path.dirname(os.path.abspath(__file__))
+ORIGINAL_CONFIG_PATH = os.path.join(NOW_PY_DIR, "caches_data", "config.json")
+OUTPUT_BASE_DIR = os.path.join(NOW_PY_DIR, "..", "..", "..", "..", "..")
+# 强制将外部调用函数加入输入解析函数候选集
+FORCE_ADD_EXTERN_CALLS = True
+# Stings评分结果合并
+# NOTE: 暂时不合并
+MERGE_STRING_SCORES = False
+
+def vulfunc_rank(input_bin: str,
+                 threshold_in: float=THRESHOLD,
+                 original_config_path: str=ORIGINAL_CONFIG_PATH,
+                 output_base_dir: str=OUTPUT_BASE_DIR,
+                 force_add_extern_calls: bool=FORCE_ADD_EXTERN_CALLS,
+                 merge_string_scores: bool=MERGE_STRING_SCORES
+                 ) -> list:
+    """
+    主程序入口，先反编译再检测
+    
+    :param input_bin: 输入二进制文件路径
+    :param threshold_in: 输入解析函数识别的初始阈值，默认为THRESHOLD常量
+    :param original_config_path: 原始配置文件路径
+    :param output_base_dir: 输出文件基础目录，各个输出文件夹以输入二进制文件名命名，放在该目录下，即缓存文件夹
+    :param force_add_extern_calls: 是否强制将外部调用函数加入输入解析函数候选集
+    :param merge_string_scores: 是否将Strings评分结果合并到最终输入解析函数候选集中
+    :return path_collision_funcs: 路径碰撞函数列表
+    :return extern_funcs: 外部调用函数列表
+    :return new_json_path: 更新后的配置文件路径
+    """
+    # Strings评分相关导入
+    if merge_string_scores:
+        import vulfunc_ranker.tasks.get_keyword as gkw
+        import vulfunc_ranker.scripts.create_input_LLM as llm  # 用于获取LLM相关配置参数
+
+    # 确定 输出 目录路径
+    if output_base_dir == OUTPUT_BASE_DIR:
+        # 使用相对于当前文件的路径：当前文件在 .claude/skills/input-parsing-func-skill/scripts/vulfunc_ranker/，输出 在 根目录
+        current_file_dir = os.path.dirname(os.path.abspath(__file__))
+        # 从 ./.claude/skills/input-parsing-func-skill/scripts/vulfunc_ranker/ 回到 ./，保存到根目录下
+        output_base_dir = os.path.abspath(os.path.join(current_file_dir, "..", "..", "..", "..", ".."))
+    else:
+        output_base_dir = os.path.abspath(output_base_dir)
+    
+    # 确保目录存在
+    os.makedirs(output_base_dir, exist_ok=True)
+    
+    # 确定 original_config_path 路径
+    if original_config_path == ORIGINAL_CONFIG_PATH:
+        # 使用相对于当前文件的路径：当前文件在 .claude/skills/input-parsing-func-skill/scripts/vulfunc_ranker/，
+        # config.json 在 .claude/skills/input-parsing-func-skill/scripts/vulfunc_ranker/caches_data/config.json
+        current_file_dir = os.path.dirname(os.path.abspath(__file__))
+        # 进入 caches_data/config.json
+        original_config_path = os.path.abspath(os.path.join(current_file_dir, "caches_data", "config.json"))
+    else:
+        original_config_path = os.path.abspath(original_config_path)
+
+    # 二进制文件不能直接放在根目录下
+    if os.path.dirname(input_bin) == output_base_dir:
+        print(f"请勿将输入二进制文件放在根目录中，以避免与输出文件发生路径冲突。")
+        sys.exit(1)
+    
+    # 反编译输入二进制文件
+    print(f"开始反编译: {input_bin}")
+    decompiled_results, has_real_name = vulfunc_ranker.tasks.decompile.batch_decompile(input_bin)
+    print("反编译完成!")
+
+    # 反编译完成后，进行漏洞函数检测和排序
+    #vulfunc_ranker.tasks.detect_input_parser_funcs_sort.execute(decompiled_results, OUTPUT_TXT, THRESHOLD)
+    
+    # 新算法判断输入解析函数
+    threshold = threshold_in
+    if not has_real_name:
+        threshold -= 1.5  # 如果函数名不可读，则降低阈值
+    func_num = len(decompiled_results)
+    top_k_init = 100
+    if func_num * 0.02 < top_k_init:
+        top_k_init = int(func_num * 0.02)
+    results = vulfunc_ranker.tasks.recognize_input_parsing_funcs.batch_judge(decompiled_results, threshold=threshold, top_k=top_k_init)
+   
+    inpf_funcs = [res['name'] for res in results]
+    inf_funcs = inf.get_input_funcs()
+   
+    # 路径碰撞分析
+    print("开始路径碰撞分析...")
+    path_collision_funcs = pc.path_collision_analysis(inf_funcs, inpf_funcs, input_bin)
+
+    
+    # NOTE：cheat，可以在这里直接修改最后出来的结果
+    # -------------------------------------------------------
+    path_collision_funcs.add("fopen")
+    # -------------------------------------------------------
+    
+    # 如有需要，强制将外部调用函数加入输入解析函数候选集
+    extern_funcs = list()
+    if force_add_extern_calls:
+        extern_funcs = ge.get_extern_calls(input_bin)
+
+    # TODO：合并原评分结果和Strings评分结果，直接求并集而不将两部分分数综合计算。
+    if merge_string_scores:
+        scorer = gkw.IDAStringScorer(input_bin)
+        # 测试接口，可以在scripts/LLM_config.json中修改LLM相关配置参数，覆盖默认值
+        # 文件不存在或参数缺失时会使用默认值
+        if os.path.exists(os.path.join(NOW_PY_DIR, "scripts", "LLM_config.json")):
+            with open(os.path.join(NOW_PY_DIR, "scripts", "LLM_config.json"), "r") as f:
+                test_values = json.load(f)
+                base_url = test_values.get("base_url", llm.ZERO_DAY_LLM_BASE_URL)
+                api_key = test_values.get("api_key", llm.ZERO_DAY_LLM_API_KEY)
+                model = test_values.get("model", llm.ZERO_DAY_LLM_MODEL)
+                timeout = test_values.get("timeout", llm.ZERO_DAY_LLM_TIMEOUT_SECONDS)
+        else:
+            base_url = llm.ZERO_DAY_LLM_BASE_URL
+            api_key = llm.ZERO_DAY_LLM_API_KEY
+            model = llm.ZERO_DAY_LLM_MODEL
+            timeout = llm.ZERO_DAY_LLM_TIMEOUT_SECONDS
+        if not all([base_url, api_key, model]):
+            print("LLM配置信息不完整，请检查环境变量或LLM_config.json文件中的base_url、api_key和model参数。")
+            sys.exit(1)
+        if not timeout or timeout <= 0:
+            timeout = 600
+        string_scores, func_scores = scorer.get_string_and_func_score(base_url=base_url,
+                                                                    api_key=api_key,
+                                                                    model=model,
+                                                                    timeout=timeout,
+                                                                    thinking=False)
+        
+        func_list = set(func_scores.keys())
+        path_collision_funcs = path_collision_funcs.union(func_list)
+   
+    # 将结果写入文件,并在结尾加上input_bin文件名,input_bin还需要去掉文件格式
+    output_name = os.path.splitext(os.path.basename(input_bin))[0]
+    
+    if not os.path.exists(os.path.join(output_base_dir, output_name)):
+        os.makedirs(os.path.join(output_base_dir, output_name))
+    if not os.path.exists(os.path.join(output_base_dir, output_name, "config.json")):
+        with open(original_config_path, "rb") as src, \
+            open(os.path.join(output_base_dir, output_name, "config.json"), "wb") as dst:
+            # 复制文件内容
+            data = src.read()
+            dst.write(data)
+    output_path = os.path.join(output_base_dir, output_name, f"recognize_output_{output_name}.json")
+    
+    with open(output_path, "w") as f:
+        # 每个dict的actions字段是set，转为list才能写入json文件
+        for res in results:
+            res['actions'] = list(res['actions'])
+        json.dump(results, f, indent=4, ensure_ascii=False)
+
+    # 常量评分输出
+    if merge_string_scores:
+        string_score_output_path = os.path.join(output_base_dir, output_name, f"input_funcs_by_string_{output_name}.json")
+        with open(string_score_output_path, "w") as f:
+            json.dump(func_scores, f, indent=4, ensure_ascii=False)
+        # NOTE：DEBUG: 输出字符串评分文件（后续替换为缓存文件）
+        string_scores_path = os.path.join(output_base_dir, output_name, f"string_scores_{output_name}.json")
+        scorer._store_string_scores(string_scores, output_path=string_scores_path)
+   
+    # 读取原json文件
+    json_path = os.path.join(output_base_dir, output_name, "config.json")
+    # 读取json文件
+    with open(json_path, "r") as f:
+        config_data = json.load(f)
+        # 在source字段的ret/0/1中都添加上path_collision_funcs,先判断是否存在该字段
+        if 'sources' in config_data:
+            if 'ret' in config_data['sources']:    
+                config_data['sources']['ret'] += path_collision_funcs
+                config_data['sources']['ret'] += extern_funcs
+            if '0' in config_data['sources']:
+                config_data['sources']['0'] += path_collision_funcs
+                config_data['sources']['0'] += extern_funcs
+            if '1' in config_data['sources']:
+                config_data['sources']['1'] += path_collision_funcs
+                config_data['sources']['1'] += extern_funcs
+    
+    new_json_path = os.path.join(output_base_dir, output_name, f"config_{output_name}.json")
+    with open(new_json_path, "w") as f:
+        # 写入json文件，保留原格式即可
+        json.dump(config_data, f, indent=4)
+        print("\n")
+        print("Output Files:")
+        print(f"Input Parsing Funcs file: {output_path} (Param Keys: name, address, decompiled, actions)")
+        if merge_string_scores:
+            print(f"Input Pasing Functions by String file: {string_score_output_path} (Key: function name, Value: string-based risk score)")
+        print(f"Config file that added Input Parsing Funcs: {new_json_path}")
+    
+    '''
+    NOTE: 主流程已不需要该步骤
+    
+    # 生成输入-输入解析链列表
+    print("开始获取输入-输入解析链...")
+    gen = gic.InputParsingChainGenerator(input_bin,
+                          recognize_output_base_dir=os.path.join(output_base_dir))
+    chains = gen.extract_input_parsing_chains()
+    
+    # 暂时只是输出结果到文件，等待后续处理需求
+    chain_path = os.path.join(output_base_dir, output_name, "input_chain_names.txt")
+    with open(chain_path, "w") as f:
+        for chain in chains:
+            names = [func['name'] for func in chain]
+            f.write(" -> ".join(names) + "\n")
+    print("输入-输入解析链获取完成!")
+    # end of test code
+    '''
+    
+    return path_collision_funcs, extern_funcs, new_json_path
+
+
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input_bin", help="输入二进制文件路径")
+    parser.add_argument("--threshold", type=float, default=THRESHOLD, help="输入解析函数识别的初始阈值，默认为6.0")
+    parser.add_argument("--original_config_path", type=str, default=ORIGINAL_CONFIG_PATH,
+                        help="原始配置文件路径，默认为当前文件夹下的caches_data/config.json")
+    parser.add_argument("--output_base_dir", type=str, default=OUTPUT_BASE_DIR,
+                        help="输出文件基础目录，各个输出文件夹以输入二进制文件名命名，放在该目录下，默认为当前文件夹的上五级目录（根目录）")
+    parser.add_argument("--not_force_add_extern_calls", action="store_true",
+                        help="不要强制将外部调用函数加入输入解析函数候选集，默认为False，即默认会加入")
+    parser.add_argument("--merge_string_scores", action="store_true",
+                        help="是否将Strings评分结果合并到最终输入解析函数候选集中，默认为False")
+
+    args = parser.parse_args()
+
+    vulfunc_rank(args.input_bin,
+                 threshold_in=args.threshold,
+                 original_config_path=args.original_config_path,
+                 output_base_dir=args.output_base_dir,
+                 force_add_extern_calls=not args.not_force_add_extern_calls,
+                 merge_string_scores=args.merge_string_scores) 
