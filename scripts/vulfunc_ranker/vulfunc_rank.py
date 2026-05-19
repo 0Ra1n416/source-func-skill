@@ -111,7 +111,7 @@ def vulfunc_rank(input_bin: str,
     
     # NOTE：cheat，可以在这里直接修改最后出来的结果
     # -------------------------------------------------------
-    path_collision_funcs.add("fopen")
+    # path_collision_funcs.add("fopen")
     # -------------------------------------------------------
     
     # 如有需要，强制将外部调用函数加入输入解析函数候选集
@@ -153,15 +153,15 @@ def vulfunc_rank(input_bin: str,
     # 将结果写入文件,并在结尾加上input_bin文件名,input_bin还需要去掉文件格式
     output_name = os.path.splitext(os.path.basename(input_bin))[0]
     
-    if not os.path.exists(os.path.join(output_base_dir, output_name)):
-        os.makedirs(os.path.join(output_base_dir, output_name))
-    if not os.path.exists(os.path.join(output_base_dir, output_name, "config.json")):
+    if not os.path.exists(os.path.join(output_base_dir, output_name, "origin")):
+        os.makedirs(os.path.join(output_base_dir, output_name, "origin"))
+    if not os.path.exists(os.path.join(output_base_dir, output_name, "origin", "config.json")):
         with open(original_config_path, "rb") as src, \
-            open(os.path.join(output_base_dir, output_name, "config.json"), "wb") as dst:
+            open(os.path.join(output_base_dir, output_name, "origin", "config.json"), "wb") as dst:
             # 复制文件内容
             data = src.read()
             dst.write(data)
-    output_path = os.path.join(output_base_dir, output_name, f"recognize_output_{output_name}.json")
+    output_path = os.path.join(output_base_dir, output_name, "origin", f"recognize_output_{output_name}.json")
     
     with open(output_path, "w") as f:
         # 每个dict的actions字段是set，转为list才能写入json文件
@@ -171,15 +171,15 @@ def vulfunc_rank(input_bin: str,
 
     # 常量评分输出
     if merge_string_scores:
-        string_score_output_path = os.path.join(output_base_dir, output_name, f"input_funcs_by_string_{output_name}.json")
+        string_score_output_path = os.path.join(output_base_dir, output_name, "origin", f"input_funcs_by_string_{output_name}.json")
         with open(string_score_output_path, "w") as f:
             json.dump(func_scores, f, indent=4, ensure_ascii=False)
         # NOTE：DEBUG: 输出字符串评分文件（后续替换为缓存文件）
-        string_scores_path = os.path.join(output_base_dir, output_name, f"string_scores_{output_name}.json")
+        string_scores_path = os.path.join(output_base_dir, output_name, "origin", f"string_scores_{output_name}.json")
         scorer._store_string_scores(string_scores, output_path=string_scores_path)
    
     # 读取原json文件
-    json_path = os.path.join(output_base_dir, output_name, "config.json")
+    json_path = os.path.join(output_base_dir, output_name, "origin", "config.json")
     # 读取json文件
     with open(json_path, "r") as f:
         config_data = json.load(f)
@@ -195,17 +195,56 @@ def vulfunc_rank(input_bin: str,
                 config_data['sources']['1'] += path_collision_funcs
                 config_data['sources']['1'] += extern_funcs
     
-    new_json_path = os.path.join(output_base_dir, output_name, f"config_{output_name}.json")
+    new_json_path = os.path.join(output_base_dir, output_name, "origin", f"config_{output_name}.json")
     with open(new_json_path, "w") as f:
         # 写入json文件，保留原格式即可
         json.dump(config_data, f, indent=4)
-        print("\n")
-        print("Output Files:")
-        print(f"Input Parsing Funcs file: {output_path} (Param Keys: name, address, decompiled, actions)")
-        if merge_string_scores:
-            print(f"Input Pasing Functions by String file: {string_score_output_path} (Key: function name, Value: string-based risk score)")
-        print(f"Config file that added Input Parsing Funcs: {new_json_path}")
     
+    '''
+    NOTE: 老Skill输出格式，报告origin文件夹下的config.json和recognize_output.json等文件路径，供后续步骤使用
+    print("\n")
+    print("Output Files:")
+    print(f"Input Parsing Funcs file: {output_path} (Param Keys: name, address, decompiled, actions)")
+    if merge_string_scores:
+        print(f"Input Pasing Functions by String file: {string_score_output_path} (Key: function name, Value: string-based risk score)")
+    print(f"Config file that added Input Parsing Funcs: {new_json_path}")
+    
+    NOTE: 新输出已经改为：Source_Level1_TypeA.json（通用Source函数），Source_Level1_TypeB.json（外部调用函数），Source_Level1_TypeC.json（算法判断的输入解析函数）等文件，供后续步骤使用
+    '''
+
+    # Output:
+    pathA = os.path.join(output_base_dir, output_name, f"Source_Level1_TypeA.json")
+    pathB = os.path.join(output_base_dir, output_name, f"Source_Level1_TypeB.json")
+    pathC = os.path.join(output_base_dir, output_name, f"Source_Level1_TypeC.json")
+
+    source_funcs = set()
+    with open(json_path, "r") as f:
+        config_data = json.load(f)
+        # 提取Source函数列表
+        if 'sources' in config_data:
+            if 'ret' in config_data['sources']:
+                source_funcs.update(config_data['sources']['ret'])
+            if '0' in config_data['sources']:
+                source_funcs.update(config_data['sources']['0'])
+            if '1' in config_data['sources']:
+                source_funcs.update(config_data['sources']['1'])
+    
+    with open(pathA, "w") as f:
+        json.dump(list(source_funcs), f, indent=4)
+
+    with open(pathB, "w") as f:
+        json.dump(list(extern_funcs), f, indent=4)
+
+    with open(pathC, "w") as f:
+        json.dump(list(path_collision_funcs), f, indent=4)
+
+    # Report
+    print("\n")
+    print("Output Files:")
+    print(f"Source_Level1_TypeA.json (A类：所有的通用Source函数): {pathA}")
+    print(f"Source_Level1_TypeB.json (B类：二进制中所有的外部调用函数): {pathB}")
+    print(f"Source_Level1_TypeC.json (C类：算法判断的输入解析函数): {pathC}")
+
     '''
     NOTE: 主流程已不需要该步骤
     
