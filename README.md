@@ -1,23 +1,27 @@
-# input-parsing-func-skill
+# source-func-skill
 
-用于对二进制文件执行输入解析函数识别（调用 `vulfunc_rank.py`），并输出可直接用于后续分析的 JSON 文件。
+反编译二进制文件，分析其中的Source函数，并输出可直接用于后续分析的 JSON 文件。
 
 ## 功能概览
 
-- 识别输入解析函数候选（结构/语义特征）
-- 可选合并字符串常量评分（`--merge_string_scores`）
-- 可选将外部调用函数强制加入候选集（默认开启）
-- 自动输出识别结果与更新后的配置文件
+识别二进制中的Source函数，采用多级架构，使用了自学习机制。
+
+相关子Skills:
+
+- **level1-source-func-skill:** 调用脚本找出三类第一层Source函数，其也可作为skill单独运行，详见[该部分的说明](./L1SourceFuncSkill_README.md)。
+  - 预定义的通用Source函数
+  - 提取的整个二进制中的所有外部函数
+  - 我们的输入解析函数价值评估算法判断出的输入解析函数
 
 ## 目录结构
 
 - Skill 入口说明：`SKILL.md`
-- 运行入口脚本：`scripts/run_input_parsing.py`
-- 主分析脚本：`scripts/vulfunc_ranker/vulfunc_rank.py`
+- 子Skills目录：`./sub-skills/`
+- 脚本目录：`./scripts/`
 
 ## 配置说明
 
-1. 将整个`input-parsing-func-skill`文件夹放入`.claude/skills/`。
+1. 将整个`source-func-skill`文件夹放入`.claude/skills/`。
 2. 配置Python环境
     - 可以配置环境变量`INPUT_PARSING_FUNC_PYTHON`指定Python
     - 可以在`./scripts/vulfunc_ranker`下创建`.venv`虚拟环境（注意：要想被自动检测，请设置venv名称为`.venv`）
@@ -30,42 +34,24 @@
 
 ## 在 Claude Code 中调用
 
-你可以通过自然语言，让Claude Code给你分析某二进制中的输入解析函数，可以显示说明你需要的可选功能，Claude Code会自动带上参数执行。具体参数可参照[参数说明](#参数说明)章节。
+你可以通过自然语言，让Claude Code给你分析某二进制中的Source函数。
 
 例如：
 
-```text
-`解析二进制文件./samples/a.out的输入解析函数，输出目录为./outputs，并考虑字符串常量评分`
+```bash
+解析二进制文件./samples/a.out的Source函数。
 ```
-
-这相当于传入 `input_bin`、`--output_base_dir ./outputs` 和 `--merge_string_scores`
 
 当然，你也可以直接使用该 Skill：
 
-```text
-/input-parsing-func-skill <binary_path>
+```bash
+/source-func-skill <binary_path>
 ```
 
 例如：
 
-```text
-/input-parsing-func-skill C:\Users\user\Desktop\a.exe --merge_string_scores
-```
-
-## 直接运行方式
-
-在本 Skill 根目录执行：
-
 ```bash
-python ./scripts/run_input_parsing.py <input_bin> [optional_flags]
-```
-
-示例：
-
-```bash
-python ./scripts/run_input_parsing.py ./samples/a.out
-python ./scripts/run_input_parsing.py ./samples/a.out --merge_string_scores
-python ./scripts/run_input_parsing.py ./samples/fw.bin --output_base_dir ./outputs
+/source-func-skill C:\Users\user\Desktop\a.exe
 ```
 
 ## 参数说明
@@ -73,14 +59,6 @@ python ./scripts/run_input_parsing.py ./samples/fw.bin --output_base_dir ./outpu
 ### 必填参数
 
 - `input_bin`：待分析二进制路径
-
-### 可选参数
-
-- `--threshold <float>`：识别阈值（默认 `6.0`）
-- `--original_config_path <path>`：原始配置文件路径
-- `--output_base_dir <path>`：输出根目录
-- `--not_force_add_extern_calls`：不将外部调用函数加入候选（默认是加入）
-- `--merge_string_scores`：合并字符串/常量评分到最终候选
 
 ## Python 解释器选择顺序
 
@@ -94,12 +72,7 @@ python ./scripts/run_input_parsing.py ./samples/fw.bin --output_base_dir ./outpu
 
 设 `output_name = <input_bin 文件名去后缀>`，默认输出到仓库根目录下：
 
-- `<output_name>/recognize_output_<output_name>.json`
-- `<output_name>/config_<output_name>.json`
-- `<output_name>/input_funcs_by_string_<output_name>.json`（仅 `--merge_string_scores` 开启时）
-- `<output_name>/string_scores_<output_name>.json`（仅 `--merge_string_scores` 开启时，字符串明细）
-
-脚本末尾会打印 `Output Files:`，以该处显示的实际路径为准。
+`./<output_name>/`
 
 ## 常见问题
 
@@ -109,5 +82,20 @@ python ./scripts/run_input_parsing.py ./samples/fw.bin --output_base_dir ./outpu
 - **路径冲突报错（输入文件在输出根目录）**
   - 避免把输入二进制直接放在输出根目录，或通过 `--output_base_dir` 指定其他目录。
 
-- **未生成字符串相关 JSON**
-  - 仅在传入 `--merge_string_scores` 时生成 `input_funcs_by_string_*` 与 `string_scores_*`。
+## 直接运行`输入解析函数价值评估算法`
+
+输入解析函数价值评估算法是一套可独立运行的Python程序。
+
+你可以在本 Skill 根目录执行：
+
+```bash
+python ./scripts/run_input_parsing.py <input_bin> [optional_flags]
+```
+
+示例：
+
+```bash
+python ./scripts/run_input_parsing.py ./samples/a.out
+python ./scripts/run_input_parsing.py ./samples/a.out --merge_string_scores
+python ./scripts/run_input_parsing.py ./samples/fw.bin --output_base_dir ./outputs
+```
