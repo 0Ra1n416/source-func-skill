@@ -58,9 +58,9 @@ def vulfunc_rank(input_bin: str,
 
     # 确定 输出 目录路径
     if output_base_dir == OUTPUT_BASE_DIR:
-        # 使用相对于当前文件的路径：当前文件在 .claude/skills/input-parsing-func-skill/scripts/vulfunc_ranker/，输出 在 根目录
+        # 使用相对于当前文件的路径：当前文件在 .claude/skills/source-func-skill/scripts/vulfunc_ranker/，输出 在 根目录
         current_file_dir = os.path.dirname(os.path.abspath(__file__))
-        # 从 ./.claude/skills/input-parsing-func-skill/scripts/vulfunc_ranker/ 回到 ./，保存到根目录下
+        # 从 ./.claude/skills/source-func-skill/scripts/vulfunc_ranker/ 回到 ./，保存到根目录下
         output_base_dir = os.path.abspath(os.path.join(current_file_dir, "..", "..", "..", "..", ".."))
     else:
         output_base_dir = os.path.abspath(output_base_dir)
@@ -70,8 +70,8 @@ def vulfunc_rank(input_bin: str,
     
     # 确定 original_config_path 路径
     if original_config_path == ORIGINAL_CONFIG_PATH:
-        # 使用相对于当前文件的路径：当前文件在 .claude/skills/input-parsing-func-skill/scripts/vulfunc_ranker/，
-        # config.json 在 .claude/skills/input-parsing-func-skill/scripts/vulfunc_ranker/caches_data/config.json
+        # 使用相对于当前文件的路径：当前文件在 .claude/skills/source-func-skill/scripts/vulfunc_ranker/，
+        # config.json 在 .claude/skills/source-func-skill/scripts/vulfunc_ranker/caches_data/config.json
         current_file_dir = os.path.dirname(os.path.abspath(__file__))
         # 进入 caches_data/config.json
         original_config_path = os.path.abspath(os.path.join(current_file_dir, "caches_data", "config.json"))
@@ -206,7 +206,7 @@ def vulfunc_rank(input_bin: str,
     print("Output Files:")
     print(f"Input Parsing Funcs file: {output_path} (Param Keys: name, address, decompiled, actions)")
     if merge_string_scores:
-        print(f"Input Pasing Functions by String file: {string_score_output_path} (Key: function name, Value: string-based risk score)")
+        print(f"Input Parsing Functions by String file: {string_score_output_path} (Key: function name, Value: string-based risk score)")
     print(f"Config file that added Input Parsing Funcs: {new_json_path}")
     
     NOTE: 新输出已经改为：Source_Level1_TypeA.json（通用Source函数），Source_Level1_TypeB.json（外部调用函数），Source_Level1_TypeC.json（算法判断的输入解析函数）等文件，供后续步骤使用
