@@ -252,7 +252,7 @@ def vulfunc_rank(input_bin: str,
 
     # Type A: 所有的通用Source函数（即原config.json中sources字段下的函数列表，包含ret/0/1等不同类型）
     param_json_path = os.path.join(original_config_path, "..", "config_params.json")
-    with open(param_json_path, "r") as f:
+    with open(param_json_path, "r", encoding="utf-8") as f:
         param_data = json.load(f)
     for func in source_funcs:
         func_dict = make_json_template()
@@ -271,6 +271,8 @@ def vulfunc_rank(input_bin: str,
                 })
             func_dict["param_mapping"] = param_mapping_list
             description += param_data[func]["description"]
+            if not description.endswith("。"):
+                description += "。"
         else:
             description += "暂无参数映射信息。"
         
@@ -296,7 +298,7 @@ def vulfunc_rank(input_bin: str,
         source_func_list.append(func_dict)
 
     # 将source函数列表写入source.json文件
-    with open(source_json_path, "w") as f:
+    with open(source_json_path, "w", encoding="utf-8") as f:
         json.dump({
                     "target": output_name,
                     "sources": source_func_list
