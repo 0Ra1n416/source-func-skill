@@ -1,5 +1,6 @@
 import argparse
 import os
+import json
 
 parser = argparse.ArgumentParser()
 parser.add_argument("input_bin", help="输入二进制文件路径")
@@ -14,11 +15,16 @@ output_base_dir = os.path.abspath(os.path.join(current_file_dir, "..", "..", "..
 output_name = os.path.splitext(os.path.basename(args.input_bin))[0]
 
 flagString = "[First Run]"
-if not os.path.exists(os.path.join(output_base_dir, output_name)):
-    if os.path.exists(os.path.join(output_base_dir, output_name, "Source_Level1_TypeC.json")):
-        flagString = "[Level1 Found]"
-    # TODO: 继续检测Level2以上文件是否存在，来区分Level1和Level2以上
-    if 1:
-        pass
+if os.path.exists(os.path.join(output_base_dir, output_name)):
+    if os.path.exists(os.path.join(output_base_dir, output_name, "source.json")):
+        with open(os.path.join(output_base_dir, output_name, "source.json"), "r") as f:
+            data = json.load(f)
+            if "target" in data and data["target"] == output_name:
+                for source in data.get("sources", []):
+                    if source.get("layer", -1) == 1:
+                        flagString = "[Layer1 Found]"
+                        break        
 
+# [First Run] - 没有找到输出文件夹，第一次运行 - 完整运行
+# [Layer1 Found] - 找到了输出文件夹，并且在source.json中找到了至少一个第一层source函数，说明之前已经运行过一次，并且完成了第一层source函数的识别和输出 - 第一层不用运行
 print(flagString)

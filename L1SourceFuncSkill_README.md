@@ -1,4 +1,4 @@
-# level1-source-func-skill
+# layer1-source-func-skill
 
 用于对二进制文件执行输入解析函数识别（调用 `vulfunc_rank.py`），并输出可直接用于后续分析的 JSON 文件。
 
@@ -6,9 +6,9 @@
 
 **注意**，如果有需要，该部分也可以当作单独的Skill，请按如下步骤操作：
 
-1. 创建一个新skill文件夹，命名`level1-source-func-skill`
-2. 将`./sub-skills/level1-source-func.md`中的内容复制到`level1-source-func-skill/SKILL.md`
-3. 将`./scripts`复制到`level1-source-func-skill/`下，即`level1-source-func-skill/scripts`
+1. 创建一个新skill文件夹，命名`layer1-source-func-skill`
+2. 将`./sub-skills/layer1-source-func.md`中的内容复制到`layer1-source-func-skill/SKILL.md`
+3. 将`./scripts`复制到`layer1-source-func-skill/`下，即`layer1-source-func-skill/scripts`
 
 经过上述操作，该部分可以成为单独的Skill，请查看手册剩余内容了解其功能与使用。
 
@@ -27,7 +27,7 @@
 
 ## 配置说明
 
-1. 将整个`level1-source-func-skill`文件夹放入`.claude/skills/`。
+1. 将整个`layer1-source-func-skill`文件夹放入`.claude/skills/`。
 2. 配置Python环境
     - 可以配置环境变量`INPUT_PARSING_FUNC_PYTHON`指定Python
     - 可以在`./scripts/vulfunc_ranker`下创建`.venv`虚拟环境（注意：要想被自动检测，请设置venv名称为`.venv`）
@@ -53,13 +53,13 @@
 当然，你也可以直接使用该 Skill：
 
 ```text
-/level1-source-func-skill <binary_path>
+/layer1-source-func-skill <binary_path>
 ```
 
 例如：
 
 ```text
-/level1-source-func-skill C:\Users\user\Desktop\a.exe --merge_string_scores
+/layer1-source-func-skill C:\Users\user\Desktop\a.exe --merge_string_scores
 ```
 
 ## 直接运行方式
@@ -104,10 +104,10 @@ python ./scripts/run_input_parsing.py ./samples/fw.bin --output_base_dir ./outpu
 
 设 `output_name = <input_bin 文件名去后缀>`，默认输出到仓库根目录下：
 
-- `<output_name>/recognize_output_<output_name>.json`
-- `<output_name>/config_<output_name>.json`
-- `<output_name>/input_funcs_by_string_<output_name>.json`（仅 `--merge_string_scores` 开启时）
-- `<output_name>/string_scores_<output_name>.json`（仅 `--merge_string_scores` 开启时，字符串明细）
+- `<output_name>/origin/recognize_output_<output_name>.json`
+- `<output_name>/origin/config_<output_name>.json`
+- `<output_name>/origin/input_funcs_by_string_<output_name>.json`（仅 `--merge_string_scores` 开启时）
+- `<output_name>/origin/string_scores_<output_name>.json`（仅 `--merge_string_scores` 开启时，字符串明细）
 
 脚本末尾会打印 `Output Files:`，以该处显示的实际路径为准。
 

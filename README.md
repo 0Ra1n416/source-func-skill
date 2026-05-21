@@ -8,7 +8,7 @@
 
 相关子Skills:
 
-- **level1-source-func-skill:** 调用脚本找出三类第一层Source函数，其也可作为skill单独运行，详见[该部分的说明](./L1SourceFuncSkill_README.md)。
+- **layer1-source-func-skill:** 调用脚本找出三类第一层Source函数，并创建包含所有第一层source函数的初始json文件。其也可作为skill单独运行，详见[该部分的说明](./L1SourceFuncSkill_README.md)。
   - 预定义的通用Source函数
   - 提取的整个二进制中的所有外部函数
   - 我们的输入解析函数价值评估算法判断出的输入解析函数
@@ -72,7 +72,8 @@
 
 设 `output_name = <input_bin 文件名去后缀>`，默认输出到仓库根目录下：
 
-`./<output_name>/`
+- 该二进制的输出文件夹：`./<output_name>/`
+- Source函数JSON文件：`./<output_name>/source.json`
 
 ## 常见问题
 
@@ -91,6 +92,8 @@
 ```bash
 python ./scripts/run_input_parsing.py <input_bin> [optional_flags]
 ```
+
+其相关输出可以在`./<output_name>/origin`中查看。
 
 示例：
 

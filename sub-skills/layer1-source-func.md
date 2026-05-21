@@ -1,9 +1,9 @@
 ---
-name: level1-source-func-skill
-description: 用这个 Skill 对二进制运行 vulfunc_rank.py，并输出三类Source函数的位置。
+name: layer1-source-func-skill
+description: 用这个 Skill 对二进制运行 vulfunc_rank.py，并输出包含第一层的三类Source函数的JSON文件。
 ---
 
-# Level1 Source Func Skill
+# Layer1 Source Func Skill
 
 使用脚本 `./scripts/run_input_parsing.py` 分析输入二进制文件（由它转调 `./scripts/vulfunc_ranker/vulfunc_rank.py`）。
 
@@ -51,7 +51,7 @@ Python 选择顺序（由入口脚本自动确定）：
 
 ## 执行
 
-在本 Skill 的父目录执行（即SKILL.md所在的路径下执行）（保证相对路径可用）：
+在本 Skill 的父目录执行（即`SKILL.md`所在的路径下执行）（保证相对路径可用）：
 
 `python ./scripts/run_input_parsing.py <input_bin> [可选参数]`
 
@@ -62,9 +62,7 @@ Python 选择顺序（由入口脚本自动确定）：
 需要向用户回报：
 
 - 预期文件：
-  - `{output_name}/Source_Level1-TypeA.json`
-  - `{output_name}/Source_Level1-TypeB.json`
-  - `{output_name}/Source_Level1-TypeC.json`
+  - `{output_name}/source.json`
 - 脚本实际打印的 `Output Files:` 列表中的真实路径
 
 如果缺少输入二进制路径，返回简短错误并提示用户提供 `input_bin`。

@@ -209,13 +209,11 @@ def vulfunc_rank(input_bin: str,
         print(f"Input Parsing Functions by String file: {string_score_output_path} (Key: function name, Value: string-based risk score)")
     print(f"Config file that added Input Parsing Funcs: {new_json_path}")
     
-    NOTE: 新输出已经改为：Source_Level1_TypeA.json（通用Source函数），Source_Level1_TypeB.json（外部调用函数），Source_Level1_TypeC.json（算法判断的输入解析函数）等文件，供后续步骤使用
+    NOTE: 新输出已经改为：source.json文件，供后续步骤使用
     '''
 
     # Output:
-    pathA = os.path.join(output_base_dir, output_name, f"Source_Level1_TypeA.json")
-    pathB = os.path.join(output_base_dir, output_name, f"Source_Level1_TypeB.json")
-    pathC = os.path.join(output_base_dir, output_name, f"Source_Level1_TypeC.json")
+    source_json_path = os.path.join(output_base_dir, output_name, f"source.json")
 
     source_funcs = set()
     with open(json_path, "r") as f:
@@ -228,22 +226,86 @@ def vulfunc_rank(input_bin: str,
                 source_funcs.update(config_data['sources']['0'])
             if '1' in config_data['sources']:
                 source_funcs.update(config_data['sources']['1'])
+
+    def make_json_template():
+        return {
+            "id": None,  # Need to be filled in later
+            "function_name": "",  # Need to be filled in later
+            "layer": 1,
+            "sub_source_id": -1,
+            "sub_source_function": None,
+            "param_mapping": [
+                {
+                    "from_index": [-1],
+                    "to_index": -1  # Need to be filled in later
+                }
+            ],
+            "description": ""  # Need to be filled in later
+        }
     
-    with open(pathA, "w") as f:
-        json.dump(list(source_funcs), f, indent=4)
+    source_func_list = []
 
-    with open(pathB, "w") as f:
-        json.dump(list(extern_funcs), f, indent=4)
+    description_head = "第1层原始source。通用source函数。"
+    description_tail = "无下层子source"
 
-    with open(pathC, "w") as f:
-        json.dump(list(path_collision_funcs), f, indent=4)
+    id_counter = 1
+
+    # Type A: 所有的通用Source函数（即原config.json中sources字段下的函数列表，包含ret/0/1等不同类型）
+    param_json_path = os.path.join(original_config_path, "..", "config_params.json")
+    with open(param_json_path, "r") as f:
+        param_data = json.load(f)
+    for func in source_funcs:
+        func_dict = make_json_template()
+        func_dict["function_name"] = func
+        func_dict["id"] = id_counter
+        id_counter += 1
+        
+        # Extra Info
+        description = ""
+        if func in param_data and len(param_data[func]["index"]) > 0:
+            param_mapping_list = []
+            for idx in param_data[func]["index"]:
+                param_mapping_list.append({
+                    "from_index": [-1],
+                    "to_index": idx
+                })
+            func_dict["param_mapping"] = param_mapping_list
+            description += param_data[func]["description"]
+        else:
+            description += "暂无参数映射信息。"
+        
+        func_dict["description"] = description_head + description + description_tail
+        source_func_list.append(func_dict)
+
+    # Type B: 二进制中所有的外部调用函数（即通过IDA API获取到的extern调用函数列表）
+    for func in extern_funcs:
+        func_dict = make_json_template()
+        func_dict["function_name"] = func
+        func_dict["description"] = f"第1层原始source。外部调用函数。暂无参数映射信息。无下层子source。"
+        func_dict["id"] = id_counter
+        id_counter += 1
+        source_func_list.append(func_dict)
+
+    # Type C: 算法判断的输入解析函数（即通过新的算法判断出的输入解析函数列表，包含路径碰撞分析的结果）
+    for func in path_collision_funcs:
+        func_dict = make_json_template()
+        func_dict["function_name"] = func
+        func_dict["description"] = f"第1层原始source。算法判断的输入解析函数。暂无参数映射信息。无下层子source。"
+        func_dict["id"] = id_counter
+        id_counter += 1
+        source_func_list.append(func_dict)
+
+    # 将source函数列表写入source.json文件
+    with open(source_json_path, "w") as f:
+        json.dump({
+                    "target": output_name,
+                    "sources": source_func_list
+                  }, f, indent=4, ensure_ascii=False)
 
     # Report
     print("\n")
     print("Output Files:")
-    print(f"Source_Level1_TypeA.json (A类：所有的通用Source函数): {pathA}")
-    print(f"Source_Level1_TypeB.json (B类：二进制中所有的外部调用函数): {pathB}")
-    print(f"Source_Level1_TypeC.json (C类：算法判断的输入解析函数): {pathC}")
+    print(f"Source JSON file for next steps: {source_json_path}")
 
     '''
     NOTE: 主流程已不需要该步骤
