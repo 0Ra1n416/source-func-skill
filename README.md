@@ -27,10 +27,7 @@
     - 可以在`./scripts/vulfunc_ranker`下创建`.venv`虚拟环境（注意：要想被自动检测，请设置venv名称为`.venv`）
     - 不配置则使用全局`python`，优先级详见[Python 解释器选择顺序](#python-解释器选择顺序)
 3. 安装依赖，使用`pip install -r requirements.txt`，其在`./scripts/vulfunc_ranker/requirement.txt`
-4. LLM相关配置（可选）
-    - 只有字符串常量评分部分需要
-    - 可以配置`ZERO_DAY_LLM_BASE_URL`、`ZERO_DAY_LLM_API_KEY`、`ZERO_DAY_LLM_MODEL`环境变量，指定URL、Key和模型。如果需要自定义参数，可以配置环境变量`ZERO_DAY_LLM_TEMPERATURE`、`ZERO_DAY_LLM_MAX_TOKENS`、`ZERO_DAY_LLM_TIMEOUT_SECONDS`。
-    - 可以在`./scripts/vulfunc_ranker/scripts`下创建一个`LLM_config.json`文件，其中可以指定`base_url`、`api_key`、`model`、`timeout`参数，该配置优先级高于环境变量。
+4. LLM相关配置（常量分析未使用，此步忽略）
 
 ## 在 Claude Code 中调用
 
