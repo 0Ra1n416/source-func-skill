@@ -28,6 +28,9 @@
     - 不配置则使用全局`python`，优先级详见[Python 解释器选择顺序](#python-解释器选择顺序)
 3. 安装依赖，使用`pip install -r requirements.txt`，其在`./scripts/vulfunc_ranker/requirement.txt`
 4. LLM相关配置（常量分析未使用，此步忽略）
+5. 配置IDA相关环境变量
+    - *Windows*：需要配置`IDADIR`，值为IDA根目录。
+    - 其他系统请自己查询
 
 ## 在 Claude Code 中调用
 
@@ -71,6 +74,38 @@
 
 - 该二进制的输出文件夹：`./<output_name>/`
 - Source函数JSON文件：`./<output_name>/source.json`
+
+`./<output_name>/source.json`格式说明：
+
+```json
+{
+    "target": <二进制文件名（去除扩展名）>,
+    "sources": [
+        {
+            "id": <当前函数ID>,
+            "function_name": <当前函数名>,
+            "layer": <层数>,
+            "sub_source_id": <子source函数ID>,
+            "sub_source_function": <子source函数>,
+            "param_mapping": [
+                {
+                    "from_index": [
+                        <来源参数索引值>
+                    ],
+                    "to_index": <目标参数索引值>
+                },
+                {...},
+                ...
+            ],
+            "description": <source函数描述>
+        },
+        {
+          ...
+        },
+        ...
+      ]
+}
+```
 
 ## 常见问题
 
