@@ -7,10 +7,10 @@ parser.add_argument("input_bin", help="输入二进制文件路径")
 
 args = parser.parse_args()
 
-# 使用相对于当前文件的路径：当前文件在 ./.claude/skills/source-func-skill/scripts/，输出 在 根目录
+# 使用相对于当前文件的路径：当前文件在 ./.claude/skills/source-func-skill/scripts/check_status，输出 在 根目录
 current_file_dir = os.path.dirname(os.path.abspath(__file__))
-# 从 ./.claude/skills/source-func-skill/scripts/ 回到 ./，保存到根目录下
-output_base_dir = os.path.abspath(os.path.join(current_file_dir, "..", "..", "..", ".."))
+# 从 ./.claude/skills/source-func-skill/scripts/check_status 回到 ./，保存到根目录下
+output_base_dir = os.path.abspath(os.path.join(current_file_dir, "..", "..", "..", "..", ".."))
 
 output_name = os.path.splitext(os.path.basename(args.input_bin))[0]
 
