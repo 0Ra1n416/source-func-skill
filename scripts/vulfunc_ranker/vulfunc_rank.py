@@ -14,6 +14,7 @@ import vulfunc_ranker.tasks.path_collision as pc
 import vulfunc_ranker.tasks.input_funcs as inf
 import vulfunc_ranker.scripts.generate_input_chain as gic
 import vulfunc_ranker.tasks.get_extern as ge
+import vulfunc_ranker.tasks.filter_extern_by_llm as fex
 
 # 其他必要的导入
 import idapro
@@ -113,11 +114,28 @@ def vulfunc_rank(input_bin: str,
     # -------------------------------------------------------
     # path_collision_funcs.add("fopen")
     # -------------------------------------------------------
-    
+
+    # 确定 output_name（后续多处使用，提前计算）
+    output_name = os.path.splitext(os.path.basename(input_bin))[0]
+
     # 如有需要，强制将外部调用函数加入输入解析函数候选集
+    # 外部函数会先经过缓存检查：命中缓存且判定为Source的直接加入，未命中则写入待判断文件交由 SubAgent 判断
     extern_funcs = list()
+    pending_judge_path = None  # 待SubAgent判断的文件路径
     if force_add_extern_calls:
-        extern_funcs = ge.get_extern_calls(input_bin)
+        raw_extern_funcs = ge.get_extern_calls(input_bin)
+
+        # 检查缓存：命中(source)直接加入，未命中写入待判断文件
+        extern_filter = fex.ExternSourceFilter()
+        cached_source_funcs, uncached_funcs = extern_filter.filter_source_funcs(raw_extern_funcs)
+
+        if uncached_funcs:
+            # 将未命中缓存的函数写入待判断文件，供后续 SubAgent 判断
+            origin_dir = os.path.join(output_base_dir, output_name, "origin")
+            pending_judge_path = fex.write_pending_judge_file(uncached_funcs, origin_dir)
+
+        # 当前运行仅使用缓存命中的Source函数
+        extern_funcs = cached_source_funcs
 
     # TODO：合并原评分结果和Strings评分结果，直接求并集而不将两部分分数综合计算。
     if merge_string_scores:
@@ -149,10 +167,9 @@ def vulfunc_rank(input_bin: str,
         
         func_list = set(func_scores.keys())
         path_collision_funcs = path_collision_funcs.union(func_list)
-   
-    # 将结果写入文件,并在结尾加上input_bin文件名,input_bin还需要去掉文件格式
-    output_name = os.path.splitext(os.path.basename(input_bin))[0]
-    
+
+    # 将结果写入文件
+
     if not os.path.exists(os.path.join(output_base_dir, output_name, "origin")):
         os.makedirs(os.path.join(output_base_dir, output_name, "origin"))
     if not os.path.exists(os.path.join(output_base_dir, output_name, "origin", "config.json")):
@@ -308,6 +325,10 @@ def vulfunc_rank(input_bin: str,
     print("\n")
     print("Output Files:")
     print(f"Source JSON file for next steps: {source_json_path}")
+    if pending_judge_path:
+        print(f"\n[PENDING] 待SubAgent判断的外部函数文件: {pending_judge_path}")
+        print(f"  请使用 SubAgent 判断该文件中的外部函数是否为Source函数，")
+        print(f"  判断完成后将结果写入缓存，再重新运行分析即可获得完整结果。")
 
     '''
     NOTE: 主流程已不需要该步骤

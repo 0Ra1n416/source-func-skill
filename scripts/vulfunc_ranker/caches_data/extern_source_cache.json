@@ -1,0 +1,1122 @@
+{
+    "sqlite3_column_text": {
+        "is_source": true,
+        "reason": "SQLite3 C API，从数据库查询结果中提取文本列数据，数据来源为外部SQL数据库文件",
+        "timestamp": "2026-06-09T09:32:43.365829"
+    },
+    "get_wifi_signal_grade": {
+        "is_source": true,
+        "reason": "系统状态查询函数，从WiFi硬件/驱动读取信号强度等级，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.365855"
+    },
+    "hc_physical_modem_info": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，从物理Modem读取设备信息，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.365858"
+    },
+    "get_dpi_name": {
+        "is_source": true,
+        "reason": "DPI特征库查询函数，从已加载的DPI表中读取应用名称，数据来源为外部DPI特征数据库",
+        "timestamp": "2026-06-09T09:32:43.365859"
+    },
+    "hc_physical_link_status_ex": {
+        "is_source": true,
+        "reason": "硬件状态查询函数，从物理网络接口读取链路连接状态，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.365862"
+    },
+    "json_object_iter_value": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，通过迭代器从已解析的外部JSON对象中读取值，数据来源为外部JSON数据",
+        "timestamp": "2026-06-09T09:32:43.365863"
+    },
+    "itoa": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365864"
+    },
+    "vpn_status_peer_search": {
+        "is_source": true,
+        "reason": "VPN状态查询函数，在VPN对等体状态中搜索匹配项，数据来源为外部VPN系统运行时状态",
+        "timestamp": "2026-06-09T09:32:43.365865"
+    },
+    "sqlite3_column_int": {
+        "is_source": true,
+        "reason": "SQLite3 C API，从数据库查询结果中提取整数列数据，数据来源为外部SQL数据库文件",
+        "timestamp": "2026-06-09T09:32:43.365866"
+    },
+    "update_taglist_ex": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365867"
+    },
+    "dup_extaccess_status_v3": {
+        "is_source": true,
+        "reason": "状态检索函数，获取外部访问状态信息(v3版本)，数据来源为外部系统访问状态",
+        "timestamp": "2026-06-09T09:32:43.365869"
+    },
+    "pepinfo_cpuload": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从CPU硬件读取当前负载信息，数据来源为外部系统硬件",
+        "timestamp": "2026-06-09T09:32:43.365870"
+    },
+    "unserialize_taglist_ex": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365871"
+    },
+    "unshift_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365872"
+    },
+    "ipaddr_atoi": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365873"
+    },
+    "pepinfo_model": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从设备固件/硬件读取设备型号信息，数据来源为外部系统信息",
+        "timestamp": "2026-06-09T09:32:43.365874"
+    },
+    "sqlite3_reset": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365875"
+    },
+    "vpn_status_peer_get_by_vid": {
+        "is_source": true,
+        "reason": "VPN状态查询函数，通过VID从VPN对等体状态中获取信息，数据来源为外部VPN系统运行时状态",
+        "timestamp": "2026-06-09T09:32:43.365876"
+    },
+    "serialize_linkiplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365877"
+    },
+    "cgi_init": {
+        "is_source": true,
+        "reason": "CGI库函数，初始化CGI环境以接收HTTP请求数据，数据来源为外部HTTP请求",
+        "timestamp": "2026-06-09T09:32:43.365878"
+    },
+    "json_object_key_to_iter": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365879"
+    },
+    "json_unpack": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，解析外部JSON格式字符串为内部数据结构，数据来源为外部JSON字符串输入",
+        "timestamp": "2026-06-09T09:32:43.365880"
+    },
+    "get_physical_gobi_type_str": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，从物理Gobi(高通Modem)模块读取类型字符串，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.365881"
+    },
+    "sort_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365882"
+    },
+    "web_blocking_load_category_table": {
+        "is_source": true,
+        "reason": "网页过滤配置加载函数，从文件/数据库中加载URL分类表，数据来源为外部配置文件/数据库",
+        "timestamp": "2026-06-09T09:32:43.365883"
+    },
+    "sqlite3_bind_int": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365884"
+    },
+    "save_taglist_ex": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365885"
+    },
+    "vpn_status_peer_free": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365886"
+    },
+    "json_string_nocheck": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365887"
+    },
+    "web_blocking_find_group_category_table": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365888"
+    },
+    "load_taglist_ex": {
+        "is_source": true,
+        "reason": "标签列表加载函数，从配置文件/数据库中加载标签列表数据，数据来源为外部配置文件/数据库",
+        "timestamp": "2026-06-09T09:32:43.365888"
+    },
+    "create_numlist_multiple": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365889"
+    },
+    "pepinfo_wifi_country": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从WiFi硬件/固件读取国家/地区代码，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.365890"
+    },
+    "sort_taglist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365891"
+    },
+    "pepinfo_version_full": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统固件读取完整版本信息，数据来源为外部系统固件",
+        "timestamp": "2026-06-09T09:32:43.365892"
+    },
+    "sqlite3_clear_bindings": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365893"
+    },
+    "load_dpi_table": {
+        "is_source": true,
+        "reason": "DPI特征库加载函数，从文件/数据库中加载深度包检测特征表，数据来源为外部DPI特征文件/数据库",
+        "timestamp": "2026-06-09T09:32:43.365894"
+    },
+    "pepinfo_hwver": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从硬件读取硬件版本信息，数据来源为外部系统硬件",
+        "timestamp": "2026-06-09T09:32:43.365895"
+    },
+    "json_integer": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365896"
+    },
+    "remove_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365897"
+    },
+    "json_object_del": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365898"
+    },
+    "cgi_redirect": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365899"
+    },
+    "sqlite3_open_v2": {
+        "is_source": true,
+        "reason": "SQLite3 C API，打开指定的数据库文件，数据来源为外部文件系统中的SQLite数据库文件",
+        "timestamp": "2026-06-09T09:32:43.365900"
+    },
+    "serialize_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365901"
+    },
+    "json_object_update_missing": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365901"
+    },
+    "json_load_file": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，从文件系统加载并解析外部JSON文件，数据来源为外部JSON文件",
+        "timestamp": "2026-06-09T09:32:43.365902"
+    },
+    "union_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365903"
+    },
+    "cgi_send_header": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365904"
+    },
+    "sqlite3_exec": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365905"
+    },
+    "serialize_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365906"
+    },
+    "cgi_session_start": {
+        "is_source": true,
+        "reason": "CGI会话库函数，启动会话并从存储中读取会话数据，数据来源为外部HTTP会话存储",
+        "timestamp": "2026-06-09T09:32:43.365907"
+    },
+    "bgpstatus_free_neighs": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365908"
+    },
+    "vpn_status_init": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365909"
+    },
+    "json_array_get": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，从已解析的外部JSON数组中按索引读取元素，数据来源为外部JSON数据",
+        "timestamp": "2026-06-09T09:32:43.365910"
+    },
+    "create_numlist_from_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365911"
+    },
+    "netmask_atoi": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365912"
+    },
+    "json_array_size": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365912"
+    },
+    "bgpstatus_state_desc": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365913"
+    },
+    "exist_taglist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365914"
+    },
+    "cgi_init_headers": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365915"
+    },
+    "exist_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365916"
+    },
+    "cgi_session_var": {
+        "is_source": true,
+        "reason": "CGI会话库函数，从HTTP会话中读取变量值，数据来源为外部HTTP请求的会话数据",
+        "timestamp": "2026-06-09T09:32:43.365917"
+    },
+    "cgi_process_form": {
+        "is_source": true,
+        "reason": "CGI库函数，解析处理HTTP表单提交数据，数据来源为外部HTTP POST请求",
+        "timestamp": "2026-06-09T09:32:43.365918"
+    },
+    "create_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365919"
+    },
+    "vpn_status_peer_get_all": {
+        "is_source": true,
+        "reason": "VPN状态查询函数，获取所有VPN对等体状态信息，数据来源为外部VPN系统运行时状态",
+        "timestamp": "2026-06-09T09:32:43.365920"
+    },
+    "create_taglist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365921"
+    },
+    "get_physical_type_str": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，从物理设备读取设备类型字符串，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.365922"
+    },
+    "sqlite3_free": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365923"
+    },
+    "scnprintf": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365924"
+    },
+    "json_array_append_new": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365924"
+    },
+    "route_db_init": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365925"
+    },
+    "json_object_set_new_nocheck": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365926"
+    },
+    "pepinfo_version_number": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统固件读取版本号信息，数据来源为外部系统固件",
+        "timestamp": "2026-06-09T09:32:43.365927"
+    },
+    "sqlite3_close_v2": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365928"
+    },
+    "route_db_open_db": {
+        "is_source": true,
+        "reason": "路由数据库函数，打开路由信息数据库文件，数据来源为外部文件系统中的路由数据库",
+        "timestamp": "2026-06-09T09:32:43.365929"
+    },
+    "json_null": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365930"
+    },
+    "pepinfo_router_name": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统配置读取路由器名称，数据来源为外部系统配置",
+        "timestamp": "2026-06-09T09:32:43.365931"
+    },
+    "reload_taglist": {
+        "is_source": true,
+        "reason": "标签列表热重载函数，从配置文件/数据库中重新加载标签列表，数据来源为外部配置文件/数据库",
+        "timestamp": "2026-06-09T09:32:43.365932"
+    },
+    "is_dpi_supported": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365933"
+    },
+    "cgi_param": {
+        "is_source": true,
+        "reason": "CGI库函数，从HTTP请求QUERY_STRING/POST中获取参数值，数据来源为外部HTTP请求",
+        "timestamp": "2026-06-09T09:32:43.365934"
+    },
+    "hex2string_ex": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365935"
+    },
+    "init_iplist_multiple": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365936"
+    },
+    "get_taglist_default_ex": {
+        "is_source": true,
+        "reason": "标签列表函数，从系统默认配置中获取默认标签列表，数据来源为外部系统配置文件",
+        "timestamp": "2026-06-09T09:32:43.365936"
+    },
+    "sqlite3_column_int64": {
+        "is_source": true,
+        "reason": "SQLite3 C API，从数据库查询结果中提取64位整数列数据，数据来源为外部SQL数据库文件",
+        "timestamp": "2026-06-09T09:32:43.365937"
+    },
+    "sqlite3_bind_int64": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365938"
+    },
+    "json_string": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365939"
+    },
+    "set_physical_media": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365940"
+    },
+    "json_real_value": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，从已解析的外部JSON对象中提取浮点数值，数据来源为外部JSON数据",
+        "timestamp": "2026-06-09T09:32:43.365941"
+    },
+    "free_gobi_info_type": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365942"
+    },
+    "json_object_iter_next": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，将迭代器前进到已解析外部JSON对象的下一个元素遍历，数据来源为外部JSON数据",
+        "timestamp": "2026-06-09T09:32:43.365943"
+    },
+    "vpn_status_peer_get_by_vrf": {
+        "is_source": true,
+        "reason": "VPN状态查询函数，通过VRF从VPN对等体状态中获取信息，数据来源为外部VPN系统运行时状态",
+        "timestamp": "2026-06-09T09:32:43.365944"
+    },
+    "get_scheduled_active_plan": {
+        "is_source": true,
+        "reason": "系统配置查询函数，读取当前调度的活跃计划/策略，数据来源为外部系统配置文件/数据库",
+        "timestamp": "2026-06-09T09:32:43.365945"
+    },
+    "cgi_session_var_exists": {
+        "is_source": true,
+        "reason": "CGI会话库函数，检查会话变量是否存在需读取会话数据，数据来源为外部HTTP会话存储",
+        "timestamp": "2026-06-09T09:32:43.365946"
+    },
+    "pepinfo_pepvpn_license": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，读取PEPVPN许可证信息，数据来源为外部系统许可证文件/配置",
+        "timestamp": "2026-06-09T09:32:43.365947"
+    },
+    "get_gobi_port_mode": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，从Gobi Modem模块读取端口模式，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.365947"
+    },
+    "get_physical_interface": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，从物理网络接口读取接口信息，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.365948"
+    },
+    "pepinfo_event_msg_string": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统事件日志中读取事件消息字符串，数据来源为外部系统运行事件",
+        "timestamp": "2026-06-09T09:32:43.365949"
+    },
+    "sqlite3_finalize": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365950"
+    },
+    "sqlite3_changes": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365951"
+    },
+    "l2_bridge_is_enabled_by_taglist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365952"
+    },
+    "vpn_status_profile_free": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365953"
+    },
+    "pepinfo_variant": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统固件/硬件读取设备变体信息，数据来源为外部系统信息",
+        "timestamp": "2026-06-09T09:32:43.365954"
+    },
+    "json_loads": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，解析外部JSON字符串为内部数据结构，数据来源为外部JSON字符串输入",
+        "timestamp": "2026-06-09T09:32:43.365955"
+    },
+    "pepinfo_product_name": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统固件读取产品名称，数据来源为外部系统固件",
+        "timestamp": "2026-06-09T09:32:43.365956"
+    },
+    "vpn_status_profile_get_all": {
+        "is_source": true,
+        "reason": "VPN状态查询函数，获取所有VPN配置文件信息，数据来源为外部VPN系统配置/状态",
+        "timestamp": "2026-06-09T09:32:43.365957"
+    },
+    "exist_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365958"
+    },
+    "except_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365959"
+    },
+    "json_array_remove": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365960"
+    },
+    "json_object_clear": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365960"
+    },
+    "dup_conn_status_v3": {
+        "is_source": true,
+        "reason": "状态检索函数，获取连接状态信息(v3版本)，数据来源为外部系统连接状态",
+        "timestamp": "2026-06-09T09:32:43.365961"
+    },
+    "pepinfo_version_formal": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统固件读取正式版本信息，数据来源为外部系统固件",
+        "timestamp": "2026-06-09T09:32:43.365962"
+    },
+    "free_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365963"
+    },
+    "readfile": {
+        "is_source": true,
+        "reason": "文件I/O函数，从文件系统读取整个文件内容到内存，数据来源为外部文件",
+        "timestamp": "2026-06-09T09:32:43.365964"
+    },
+    "json_object_iter_key": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，通过迭代器从已解析的外部JSON对象中读取键名，数据来源为外部JSON数据",
+        "timestamp": "2026-06-09T09:32:43.365965"
+    },
+    "get_free_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365966"
+    },
+    "json_object": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365967"
+    },
+    "sess_setup_sqlite": {
+        "is_source": true,
+        "reason": "会话SQLite初始化函数，打开/创建会话数据库文件，数据来源为外部文件系统中的SQLite数据库",
+        "timestamp": "2026-06-09T09:32:43.365968"
+    },
+    "cgi_json_safe_integer": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365969"
+    },
+    "web_blocking_load_group_table": {
+        "is_source": true,
+        "reason": "网页过滤配置加载函数，从文件/数据库中加载URL分组表，数据来源为外部配置文件/数据库",
+        "timestamp": "2026-06-09T09:32:43.365970"
+    },
+    "pepinfo_cloud_service_status": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，读取云服务连接/运行状态，数据来源为外部云服务状态",
+        "timestamp": "2026-06-09T09:32:43.365971"
+    },
+    "union_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365972"
+    },
+    "sqlite3_bind_text": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365972"
+    },
+    "intersect_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365973"
+    },
+    "json_object_get": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，从已解析的外部JSON对象中按键读取值，数据来源为外部JSON数据",
+        "timestamp": "2026-06-09T09:32:43.365974"
+    },
+    "cgi_session_cookie_name": {
+        "is_source": true,
+        "reason": "CGI会话库函数，读取会话Cookie名称配置，数据来源为外部HTTP会话配置",
+        "timestamp": "2026-06-09T09:32:43.365975"
+    },
+    "get_physical_gobi_type": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，从物理Gobi Modem模块读取类型信息，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.365976"
+    },
+    "sqlite3_step": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365977"
+    },
+    "pepinfo_max_supported_conn": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统配置/硬件读取最大支持连接数，数据来源为外部系统配置",
+        "timestamp": "2026-06-09T09:32:43.365978"
+    },
+    "insert_linkiplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365979"
+    },
+    "free_taglist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365980"
+    },
+    "pepinfo_product_code": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统固件读取产品代码，数据来源为外部系统固件",
+        "timestamp": "2026-06-09T09:32:43.365981"
+    },
+    "json_equal": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365982"
+    },
+    "get_network": {
+        "is_source": true,
+        "reason": "网络配置查询函数，读取系统网络配置信息，数据来源为外部系统网络配置",
+        "timestamp": "2026-06-09T09:32:43.365983"
+    },
+    "pepinfo_gps_position": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从GPS硬件模块读取位置信息，数据来源为外部GPS硬件接口",
+        "timestamp": "2026-06-09T09:32:43.365984"
+    },
+    "json_array": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365984"
+    },
+    "route_db_topology_free": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365985"
+    },
+    "json_false": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365986"
+    },
+    "json_delete": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365987"
+    },
+    "replace": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365988"
+    },
+    "free_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365989"
+    },
+    "cgi_session_unregister_var": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365990"
+    },
+    "pepinfo_product_nickname": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统配置/固件读取产品昵称，数据来源为外部系统配置",
+        "timestamp": "2026-06-09T09:32:43.365991"
+    },
+    "load_dpi_category_table": {
+        "is_source": true,
+        "reason": "DPI特征库加载函数，从文件/数据库中加载DPI分类表，数据来源为外部DPI特征文件/数据库",
+        "timestamp": "2026-06-09T09:32:43.365992"
+    },
+    "json_true": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365993"
+    },
+    "route_db_finish": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365994"
+    },
+    "free_dpi_table": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365995"
+    },
+    "exist_linkiplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365996"
+    },
+    "is_modem_tethering": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365997"
+    },
+    "cgi_json_safe_string": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365997"
+    },
+    "json_real": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365998"
+    },
+    "vpn_dev2id": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365999"
+    },
+    "json_object_size": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366000"
+    },
+    "free_modem_info_type": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366001"
+    },
+    "free_linkiplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366002"
+    },
+    "sqlite3_errstr": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366003"
+    },
+    "json_loadf": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，从外部文件流加载并解析JSON数据，数据来源为外部文件流",
+        "timestamp": "2026-06-09T09:32:43.366004"
+    },
+    "sort_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366004"
+    },
+    "sqlite3_errmsg": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366005"
+    },
+    "cgi_param_multiple": {
+        "is_source": true,
+        "reason": "CGI库函数，从HTTP请求中批量获取多个同名参数值，数据来源为外部HTTP请求",
+        "timestamp": "2026-06-09T09:32:43.366006"
+    },
+    "json_sprintf": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366007"
+    },
+    "route_db_topology_get": {
+        "is_source": true,
+        "reason": "路由数据库查询函数，从路由数据库中检索网络拓扑信息，数据来源为外部路由数据库文件",
+        "timestamp": "2026-06-09T09:32:43.366008"
+    },
+    "create_iplist_from_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366009"
+    },
+    "pepinfo_oemid": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统固件读取OEM厂商ID，数据来源为外部系统固件",
+        "timestamp": "2026-06-09T09:32:43.366010"
+    },
+    "cgi_end": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366011"
+    },
+    "get_physical_media": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，从物理网络接口读取介质类型信息，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.366012"
+    },
+    "strutils_utf8_check": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366013"
+    },
+    "pepinfo_modem_package_version": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从Modem模块读取固件包版本信息，数据来源为外部Modem硬件/固件",
+        "timestamp": "2026-06-09T09:32:43.366014"
+    },
+    "cgi_session_save_path": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366015"
+    },
+    "json_object_set_new": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366016"
+    },
+    "unsort_taglist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366017"
+    },
+    "free_conn_status_v3": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366018"
+    },
+    "strutils_utf8_check_and_fix": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366018"
+    },
+    "pepinfo_serial": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从设备硬件/固件读取序列号，数据来源为外部系统硬件",
+        "timestamp": "2026-06-09T09:32:43.366019"
+    },
+    "json_array_extend": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366020"
+    },
+    "pepinfo_fips_is_avail": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统读取FIPS功能是否可用状态，数据来源为外部系统配置/状态",
+        "timestamp": "2026-06-09T09:32:43.366021"
+    },
+    "json_object_iter": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，为已解析的外部JSON对象创建迭代器以遍历其元素，数据来源为外部JSON数据",
+        "timestamp": "2026-06-09T09:32:43.366022"
+    },
+    "pepinfo_company_name": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统固件读取公司/厂商名称，数据来源为外部系统固件",
+        "timestamp": "2026-06-09T09:32:43.366023"
+    },
+    "hc_physical_gobi_info": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，从物理Gobi(高通Modem)模块读取完整设备信息，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.366024"
+    },
+    "json_integer_value": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，从已解析的外部JSON对象中提取整数值，数据来源为外部JSON数据",
+        "timestamp": "2026-06-09T09:32:43.366025"
+    },
+    "sqlite3_snprintf": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366026"
+    },
+    "json_array_insert_new": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366027"
+    },
+    "pepinfo_version": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统固件读取版本信息，数据来源为外部系统固件",
+        "timestamp": "2026-06-09T09:32:43.366028"
+    },
+    "byte2hex_ex": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366029"
+    },
+    "str_base64_encode": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366030"
+    },
+    "create_linkiplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366030"
+    },
+    "cgi_param_json": {
+        "is_source": true,
+        "reason": "CGI库函数，从HTTP请求中获取JSON格式参数数据，数据来源为外部HTTP请求",
+        "timestamp": "2026-06-09T09:32:43.366031"
+    },
+    "sort_iplist_ex": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366032"
+    },
+    "vpn_status_peer_get_by_sn": {
+        "is_source": true,
+        "reason": "VPN状态查询函数，通过序列号从VPN对等体状态中获取信息，数据来源为外部VPN系统运行时状态",
+        "timestamp": "2026-06-09T09:32:43.366033"
+    },
+    "init_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366034"
+    },
+    "sqlite3_prepare_v2": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366035"
+    },
+    "json_pack": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366036"
+    },
+    "create_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366037"
+    },
+    "remove_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366038"
+    },
+    "sqlite3_vsnprintf": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366039"
+    },
+    "sqlite3_busy_timeout": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366039"
+    },
+    "hc_physical_gobi_sim_info": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，从物理Gobi Modem读取SIM卡信息，数据来源为外部SIM卡硬件接口",
+        "timestamp": "2026-06-09T09:32:43.366040"
+    },
+    "json_dumpf": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366041"
+    },
+    "intersect_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366042"
+    },
+    "cgi_init_ex": {
+        "is_source": true,
+        "reason": "CGI库函数(扩展版)，初始化CGI环境以接收HTTP请求数据，数据来源为外部HTTP请求",
+        "timestamp": "2026-06-09T09:32:43.366043"
+    },
+    "insert_numlist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366044"
+    },
+    "module_get_physical_port_type": {
+        "is_source": true,
+        "reason": "硬件模块查询函数，从物理模块读取端口类型信息，数据来源为外部硬件模块接口",
+        "timestamp": "2026-06-09T09:32:43.366045"
+    },
+    "insert_iplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366046"
+    },
+    "json_object_active_slot_port_info": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，读取设备活跃槽位(Slot)端口信息，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.366047"
+    },
+    "web_blocking_free_category_table": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366048"
+    },
+    "get_physical_type_ex": {
+        "is_source": true,
+        "reason": "硬件信息查询函数(扩展版)，从物理设备读取设备类型信息，数据来源为外部硬件接口",
+        "timestamp": "2026-06-09T09:32:43.366049"
+    },
+    "json_object_epx_capability": {
+        "is_source": true,
+        "reason": "硬件/系统信息查询函数，从设备读取EPX能力集信息，数据来源为外部硬件/系统接口",
+        "timestamp": "2026-06-09T09:32:43.366050"
+    },
+    "json_object_module_port_feature": {
+        "is_source": true,
+        "reason": "硬件信息查询函数，从模块端口读取功能特性信息，数据来源为外部硬件模块接口",
+        "timestamp": "2026-06-09T09:32:43.366051"
+    },
+    "create_iplist_multiple": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366051"
+    },
+    "vpn_status_finish": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366052"
+    },
+    "json_string_value": {
+        "is_source": true,
+        "reason": "Jansson JSON库API，从已解析的外部JSON对象中提取字符串值，数据来源为外部JSON数据",
+        "timestamp": "2026-06-09T09:32:43.366053"
+    },
+    "pepinfo_serial_stripped": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从设备硬件读取去除格式化后的序列号，数据来源为外部系统硬件",
+        "timestamp": "2026-06-09T09:32:43.366054"
+    },
+    "bgpstatus_get_neighs": {
+        "is_source": true,
+        "reason": "BGP状态检索函数，从BGP路由协议守护进程获取邻居信息，数据来源为外部BGP系统运行时状态",
+        "timestamp": "2026-06-09T09:32:43.366055"
+    },
+    "clear_linkiplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366056"
+    },
+    "remove_linkiplist": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366057"
+    },
+    "pepinfo_test_oemid": {
+        "is_source": true,
+        "reason": "pepinfo系统信息函数，从系统固件读取测试OEM ID，数据来源为外部系统固件",
+        "timestamp": "2026-06-09T09:32:43.366058"
+    },
+    "json_object_update": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366059"
+    },
+    "cgi_session_destroy": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366060"
+    },
+    "sqlite3_last_insert_rowid": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366061"
+    },
+    "cgi_session_register_var": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366062"
+    },
+    "cgi_session_alter_var": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366063"
+    },
+    "__gmon_start__": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366064"
+    },
+    "json_array_set_new": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366064"
+    },
+    "json_integer_set": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.366065"
+    },
+    "sqlite3_close": {
+        "is_source": false,
+        "reason": "",
+        "timestamp": "2026-06-09T09:32:43.365861"
+    }
+}

@@ -55,6 +55,26 @@ Python 选择顺序（由入口脚本自动确定）：
 
 `python ./scripts/run_input_parsing.py <input_bin> [可选参数]`
 
+如果脚本输出包含 `[PENDING]` 标记，说明存在缓存未命中的外部函数，需要按以下步骤处理：
+
+1. 读取 `[PENDING]` 行指示的 JSON 文件（如 `{output_name}/origin/pending_extern_judge.json`）
+2. 使用 SubAgent 逐个判断其中的函数是否为 Source 函数：
+   - Source 函数 = 能从外部接收用户/攻击者控制数据的函数（如 recv、fopen、getenv、websGetVar、system 等）
+   - 非 Source 函数 = 纯数学/内存管理/字符串操作/流程控制等不引入外部数据的函数
+   - **判定为 Source 时，必须给出 `reason` 理由**：
+     - 标准库函数：引用所属标准库/API（如 `fopen` → "C标准库 stdio.h，从文件系统读取外部数据"）
+     - 非标准库函数：给出强证据说明为何能接收外部控制数据（如 `cgi_param` → "CGI库函数，从HTTP请求中获取参数值"）
+   - 判定为非 Source 时，不需要给出理由
+3. SubAgent 判断完成后，调用以下 Python 代码将结果（含理由）写入缓存：
+   ```python
+   from vulfunc_ranker.tasks.filter_extern_by_llm import apply_subagent_results
+   apply_subagent_results({
+       "fopen": {"is_source": True, "reason": "C标准库stdio.h，从文件系统读取外部数据，可由用户/攻击者控制文件路径"},
+       "strlen": {"is_source": False},
+   })
+   ```
+4. 缓存更新后，重新运行 `python ./scripts/run_input_parsing.py <input_bin> [可选参数]` 获取完整结果
+
 ## 输出
 
 令 `output_name = input_bin` 去后缀文件名（无后缀则不去），输出目录为当前工作根目录下的 `{output_name}/`。
